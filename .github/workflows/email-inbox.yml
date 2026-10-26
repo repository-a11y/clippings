@@ -25,6 +25,7 @@ jobs:
           INBOX_USER: ${{ secrets.INBOX_USER }}
           INBOX_APP_PASSWORD: ${{ secrets.INBOX_APP_PASSWORD }}
           ALLOWED_SENDERS: ${{ secrets.ALLOWED_SENDERS }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Commit new clippings
         run: |
           git config user.name "clippings-inbox"

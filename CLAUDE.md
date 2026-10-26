@@ -21,4 +21,4 @@ When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.h
 
 ## Email inbox
 
-`.github/workflows/email-inbox.yml` runs every 15 minutes (only when repo variable `INBOX_ENABLED` is `true`) and runs `scripts/email-inbox.mjs`: unread Gmail messages from `ALLOWED_SENDERS` become clippings. Subject = caption; optional body lines `source: <url>` and `tags: a, b`; each image attachment = one image clipping; no image = text clipping of the body. Secrets: `INBOX_USER`, `INBOX_APP_PASSWORD` (Gmail app password), `ALLOWED_SENDERS` (comma-separated).
+`.github/workflows/email-inbox.yml` runs every 15 minutes (only when repo variable `INBOX_ENABLED` is `true`) and runs `scripts/email-inbox.mjs`: unread Gmail messages from `ALLOWED_SENDERS` become clippings. Subject = caption; optional body lines `source: <url>` and `tags: a, b`; each image attachment = one image clipping; no image = text clipping of the body. Blank subject: if secret `ANTHROPIC_API_KEY` is set, Claude writes the caption (house style; not for HEIC). Secrets: `INBOX_USER`, `INBOX_APP_PASSWORD` (Gmail app password), `ALLOWED_SENDERS` (comma-separated).
