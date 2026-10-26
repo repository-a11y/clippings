@@ -1,7 +1,7 @@
 // Clippings archive: reads clippings.json (or window.CLIPPINGS) and renders a filterable wall.
 (function () {
   const $ = (s) => document.querySelector(s);
-  const state = { all: [], view: [], q: "", kind: "all", tag: null, open: -1 };
+  const state = { all: [], view: [], q: "", open: -1 };
 
   function el(tag, cls, text) {
     const n = document.createElement(tag);
@@ -31,33 +31,9 @@
   }
 
   function matches(c) {
-    if (state.kind !== "all" && c.type !== state.kind) return false;
-    if (state.tag && !(c.tags || []).includes(state.tag)) return false;
     if (!state.q) return true;
     const hay = [c.caption, c.text, c.alt, c.source, ...(c.tags || [])].join(" ").toLowerCase();
     return state.q.split(/\s+/).every((w) => hay.includes(w));
-  }
-
-  function renderFilters() {
-    const box = $("#filters");
-    box.textContent = "";
-    const kinds = [["all", "All"], ["image", "Images"], ["text", "Text"]];
-    kinds.forEach(([k, label]) => {
-      const b = el("button", "chip", label);
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(state.kind === k));
-      b.onclick = () => { state.kind = k; update(); };
-      box.appendChild(b);
-    });
-    const tags = [...new Set(state.all.flatMap((c) => c.tags || []))].sort();
-    if (tags.length) box.appendChild(el("span", "sep"));
-    tags.forEach((t) => {
-      const b = el("button", "chip", t);
-      b.type = "button";
-      b.setAttribute("aria-pressed", String(state.tag === t));
-      b.onclick = () => { state.tag = state.tag === t ? null : t; update(); };
-      box.appendChild(b);
-    });
   }
 
   function renderWall() {
@@ -90,7 +66,7 @@
     });
   }
 
-  function update() { renderFilters(); renderWall(); }
+  function update() { renderWall(); }
 
   function openViewer(i) {
     state.open = i;
@@ -123,10 +99,7 @@
     if ((c.tags || []).length) {
       const tags = el("div", "tags");
       c.tags.forEach((t) => {
-        const b = el("button", "chip", t);
-        b.type = "button";
-        b.onclick = () => { closeViewer(); state.tag = t; update(); };
-        tags.appendChild(b);
+        tags.appendChild(el("span", "tag", t));
       });
       info.appendChild(tags);
     }
