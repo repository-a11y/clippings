@@ -30,3 +30,7 @@ The top slot always holds an image: the most recently added image tagged `featur
 ## Order and text styles
 
 The grid is shuffled on every page load (the featured clipping stays on top). Text clippings take an optional `style`: `quote` (largest, bold sans, for things people said), `headline` (bold serif, for news headlines/titles), `excerpt` (default, reading text in a card, for passages from articles/books), `note` (small monospace, for notes/captions/screens of text).
+
+## Backup
+
+`.github/workflows/backup.yml` runs Sundays 09:00 UTC (and on manual "Run workflow") and runs `scripts/backup.mjs`: zips `clippings.json` + `media/` and saves it as a read message under the Gmail label "Clippings backups" in the inbox account (same `INBOX_USER`/`INBOX_APP_PASSWORD` secrets). Large archives split into ~15 MB parts. Keeps the newest 8 backups. `node scripts/backup.mjs --dry-run` writes the messages to `backup-out/` to inspect.
