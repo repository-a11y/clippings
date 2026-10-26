@@ -30,6 +30,8 @@
     return box;
   }
 
+  const isFeatured = (c) => (c.tags || []).some((t) => t.toLowerCase() === "featured");
+
   function matches(c) {
     if (!state.q) return true;
     const hay = [c.caption, c.text, c.alt, c.source, ...(c.tags || [])].join(" ").toLowerCase();
@@ -40,13 +42,16 @@
     const wall = $("#wall");
     wall.textContent = "";
     state.view = state.all.filter(matches);
+    // The newest clipping tagged "featured" leads the wall, full width, when not searching.
+    const fi = state.q ? -1 : state.view.findIndex(isFeatured);
+    if (fi > 0) state.view.unshift(state.view.splice(fi, 1)[0]);
     $("#count").textContent = state.view.length === state.all.length
       ? `${state.all.length} clippings`
       : `${state.view.length} of ${state.all.length} clippings`;
     $("#empty").hidden = state.view.length > 0;
 
     state.view.forEach((c, i) => {
-      const card = el("button", "clip " + c.type);
+      const card = el("button", "clip " + c.type + (fi >= 0 && i === 0 ? " featured" : ""));
       card.type = "button";
       if (c.type === "image") {
         const img = el("img");
@@ -96,9 +101,9 @@
     if (c.date) meta.appendChild(document.createTextNode((c.source ? "  ·  clipped " : "clipped ") + fmtDate(c.date)));
     if (meta.childNodes.length) info.appendChild(meta);
 
-    if ((c.tags || []).length) {
+    if ((c.tags || []).some((t) => t.toLowerCase() !== "featured")) {
       const tags = el("div", "tags");
-      c.tags.forEach((t) => {
+      c.tags.filter((t) => t.toLowerCase() !== "featured").forEach((t) => {
         tags.appendChild(el("span", "tag", t));
       });
       info.appendChild(tags);

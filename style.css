@@ -63,6 +63,10 @@ body {
 .clip:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 .clip img { display: block; width: 100%; height: auto; border-radius: 3px; background: var(--rule); transition: opacity .15s; }
 .clip:hover img { opacity: .92; }
+.clip.featured { column-span: all; max-width: 960px; margin: 0 auto 32px; }
+.clip.featured img { width: auto; max-width: 100%; max-height: 75vh; margin: 0 auto; }
+.clip.featured .cap { font-size: 18px; text-align: center; }
+.clip.featured .meta { text-align: center; }
 .clip .cap { font-size: 15px; line-height: 1.4; margin: 10px 2px 4px; }
 .clip .meta, .viewer .meta { font: 11px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.03em; margin: 0 2px; }
 

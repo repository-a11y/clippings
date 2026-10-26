@@ -15,6 +15,10 @@ Examples:
 
 Name people only when the source page, on-screen text, or Robert says who they are. Never from their face. If who/when/where isn't established, ask Robert or leave that part out rather than guessing.
 
+## Featured clipping
+
+Tag a clipping `featured` to show it full width at the top of the site (newest featured one wins; hidden while searching). The tag itself isn't displayed.
+
 ## Editing code
 
 When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.html` so browsers don't pair a new page with a cached old script.
