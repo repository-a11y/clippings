@@ -1,6 +1,7 @@
 // Imports unread emails from approved senders as clippings.
 // Subject = caption. Optional body lines: "source: <url>", "tags: a, b".
 // Each image attachment becomes an image clipping; an email with no image becomes a text clipping of its body.
+// Blank subject: if ANTHROPIC_API_KEY is set, Claude writes the caption in the house style.
 import fs from "node:fs";
 import path from "node:path";
 import { ImapFlow } from "imapflow";
@@ -43,6 +44,31 @@ function parseBody(text) {
   return { meta, body: (cut >= 0 ? rest.slice(0, cut) : rest).join("\n").trim() };
 }
 
+const captionRules = `Write a caption for an archived clipping. It reads like a museum wall label: a factual description of what it depicts, with a short descriptor for each person (nationality + role), the context, the outlet or medium, and the date. No commentary, no opinion.
+Examples:
+- Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012
+- American actor Tom Cruise in an interview with Barbara Walters, 20/20, ABC, March 1990
+Name a person only if visible text (a name, handle, on-screen caption) or the source says who they are. Never identify anyone from their face or appearance. If who, when, or where isn't shown, leave that part out rather than guess.
+Reply with the caption only, one line, no quotes.`;
+
+async function aiCaption(content) {
+  if (!process.env.ANTHROPIC_API_KEY) return "";
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "x-api-key": process.env.ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({ model: "claude-sonnet-5-5", max_tokens: 200, system: captionRules, messages: [{ role: "user", content }] }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || res.status);
+    return (data.content?.[0]?.text || "").trim().replace(/^["']|["']$/g, "");
+  } catch (e) {
+    console.log(`AI caption failed: ${e.message}`);
+    return "";
+  }
+}
+const sourceNote = (src) => (src ? [{ type: "text", text: `Source: ${src}` }] : []);
+
 const db = JSON.parse(fs.readFileSync(dbPath, "utf8"));
 const ids = new Set(db.map((c) => c.id));
 const uniqueId = (base) => { let id = base, n = 2; while (ids.has(id)) id = `${base}-${n++}`; ids.add(id); return id; };
@@ -76,15 +102,20 @@ try {
       for (const a of images) {
         const id = uniqueId(`${today}-${slug(caption || a.filename || "image")}`);
         const file = id + extFor[a.contentType];
+        const cap = caption || (a.contentType === "image/heic" ? "" : await aiCaption([
+          { type: "image", source: { type: "base64", media_type: a.contentType, data: a.content.toString("base64") } },
+          ...sourceNote(meta.source),
+        ]));
         fs.writeFileSync(path.join(mediaDir, file), a.content);
         const clip = { id, type: "image", date: today, src: `media/${file}` };
         const wh = size(a.content);
         if (wh) [clip.width, clip.height] = wh;
-        db.push({ ...clip, ...extra });
+        db.push({ ...clip, ...extra, ...(cap && { caption: cap }) });
         added++;
       }
     } else if (body) {
-      db.push({ id: uniqueId(`${today}-${slug(caption || body)}`), type: "text", date: today, text: body, ...extra });
+      const cap = caption || await aiCaption([{ type: "text", text: body }, ...sourceNote(meta.source)]);
+      db.push({ id: uniqueId(`${today}-${slug(cap || body)}`), type: "text", date: today, text: body, ...extra, ...(cap && { caption: cap }) });
       added++;
     }
   }
