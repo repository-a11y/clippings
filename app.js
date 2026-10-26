@@ -47,9 +47,6 @@
     const wall = $("#wall");
     wall.textContent = "";
     state.view = state.all.filter(matches);
-    $("#count").textContent = state.view.length === state.all.length
-      ? `${state.all.length} clippings`
-      : `${state.view.length} of ${state.all.length} clippings`;
     $("#empty").hidden = state.view.length > 0;
 
     const feat = !state.q && state.featured;

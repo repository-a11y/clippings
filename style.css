@@ -43,7 +43,6 @@ body {
 /* Header */
 .top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px 32px; padding-bottom: 20px; margin-bottom: 24px; border-bottom: 1px solid var(--rule); }
 .top h1 { font: 600 clamp(28px, 4vw, 40px)/1 var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
-.top .count { font: 12px/1 var(--meta); color: var(--muted); letter-spacing: 0.04em; margin-top: 8px; }
 .search {
   flex: 1 1 260px; max-width: 360px; min-width: 0;
   font: 15px/1 var(--display); color: var(--ink);
