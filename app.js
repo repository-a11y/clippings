@@ -14,14 +14,8 @@
     try { return new URL(url).hostname.replace(/^www\./, ""); } catch { return ""; }
   }
 
-  function fmtDate(d) {
-    if (!d) return "";
-    const t = new Date(d + "T00:00:00");
-    return isNaN(t) ? d : t.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-  }
-
   function metaLine(c) {
-    return [domain(c.source), fmtDate(c.date)].filter(Boolean).join("  ·  ");
+    return domain(c.source);
   }
 
   // Text clippings can carry a style: quote (big and bold), headline, excerpt (default) or note.
@@ -119,7 +113,6 @@
       a.href = c.source; a.target = "_blank"; a.rel = "noopener";
       meta.appendChild(a);
     }
-    if (c.date) meta.appendChild(document.createTextNode((c.source ? "  ·  clipped " : "clipped ") + fmtDate(c.date)));
     if (meta.childNodes.length) info.appendChild(meta);
 
     const shown = (c.tags || []).filter((t) => t.toLowerCase() !== "featured");
