@@ -8,8 +8,10 @@ Use `node add.mjs image <file-or-url> --caption "..." [--source URL] [--tags a,b
 
 ## Caption style (Robert's rule)
 
-Image captions are a factual description of what the image depicts: who/what, the context, the outlet or source, and the date. No commentary.
-Example: "Tom Cruise in an interview with Barbara Walters, 20/20 ABC, March 1990"
+Captions read like museum wall labels: a factual description of what the image depicts, with a short descriptor for each person (nationality + role), the context, the outlet or medium, and the date. No commentary, no opinion.
+Examples:
+- "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012"
+- "American actor Tom Cruise in an interview with Barbara Walters, 20/20, ABC, March 1990"
 
 Name people only when the source page, on-screen text, or Robert says who they are. Never from their face. If who/when/where isn't established, ask Robert or leave that part out rather than guessing.
 
