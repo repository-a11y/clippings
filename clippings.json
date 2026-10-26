@@ -1,104 +1,16 @@
 [
   {
-    "id": "sample-dunes",
+    "id": "2026-10-26-tweet-by-cher-cher-august-18-2012",
     "type": "image",
-    "src": "media/sample-dunes.svg",
-    "width": 1200,
-    "height": 800,
-    "caption": "Late light on dunes. Saved for the colour of the shadow side.",
-    "source": "https://unsplash.com/",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png",
+    "width": 1222,
+    "height": 350,
+    "alt": "Tweet from @cher: \"Whats going on with mycareer\", 12:03 PM, Aug 18, 2012",
+    "caption": "Tweet by Cher (@cher), August 18, 2012",
+    "source": "https://x.com/cher",
     "tags": [
-      "landscape",
-      "colour"
-    ],
-    "date": "2026-10-21"
-  },
-  {
-    "id": "sample-poster",
-    "type": "image",
-    "src": "media/sample-poster.svg",
-    "width": 800,
-    "height": 1120,
-    "caption": "Swiss-style concert poster. Grid is three equal bands.",
-    "source": "https://www.are.na/",
-    "tags": [
-      "design",
-      "posters"
-    ],
-    "date": "2026-10-18"
-  },
-  {
-    "id": "sample-window",
-    "type": "image",
-    "src": "media/sample-window.svg",
-    "width": 900,
-    "height": 900,
-    "caption": "Window study. Four panes, two blues.",
-    "source": "https://www.flickr.com/",
-    "tags": [
-      "architecture"
-    ],
-    "date": "2026-10-12"
-  },
-  {
-    "id": "sample-type",
-    "type": "image",
-    "src": "media/sample-type.svg",
-    "width": 1200,
-    "height": 700,
-    "caption": "Type specimen sheet from an old foundry catalogue.",
-    "source": "https://archive.org/",
-    "tags": [
-      "design",
-      "type"
-    ],
-    "date": "2026-10-05"
-  },
-  {
-    "id": "sample-tide",
-    "type": "image",
-    "src": "media/sample-tide.svg",
-    "width": 800,
-    "height": 1000,
-    "caption": "Harbour marker at low tide.",
-    "source": "https://unsplash.com/",
-    "tags": [
-      "landscape"
-    ],
-    "date": "2026-09-28"
-  },
-  {
-    "id": "sample-text-1",
-    "type": "text",
-    "text": "I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach.",
-    "caption": "Thoreau, Walden (1854).",
-    "source": "https://www.gutenberg.org/ebooks/205",
-    "tags": [
-      "reading"
-    ],
-    "date": "2026-10-20"
-  },
-  {
-    "id": "sample-text-2",
-    "type": "text",
-    "text": "Do not wait for leisure. You will not get it.",
-    "caption": "A note to self, from a forum thread on keeping a commonplace book.",
-    "source": "https://news.ycombinator.com/",
-    "tags": [
-      "notes"
-    ],
-    "date": "2026-10-09"
-  },
-  {
-    "id": "sample-text-3",
-    "type": "text",
-    "text": "The eye should learn to listen before it looks.",
-    "caption": "Margin note from a photography workshop handout.",
-    "source": "https://www.are.na/",
-    "tags": [
-      "photography",
-      "reading"
-    ],
-    "date": "2026-09-30"
+      "twitter"
+    ]
   }
 ]
