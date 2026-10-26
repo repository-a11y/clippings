@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Add a clipping to clippings.json.
 //   node add.mjs image <file-or-url> --caption "..." [--source URL] [--tags a,b] [--alt "..."]
-//   node add.mjs text "<quoted text>" [--caption "note"] [--source URL] [--tags a,b]
+//   node add.mjs text "<quoted text>" [--caption "note"] [--source URL] [--tags a,b] [--style quote|headline|excerpt|note]
 import fs from "node:fs";
 import path from "node:path";
 
@@ -64,6 +64,7 @@ if (type === "image") {
   if (opts.alt) clip.alt = opts.alt;
 } else {
   clip.text = value;
+  if (opts.style) clip.style = opts.style;
 }
 if (opts.caption) clip.caption = opts.caption;
 if (opts.source) clip.source = opts.source;

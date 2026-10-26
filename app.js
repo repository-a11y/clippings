@@ -24,8 +24,15 @@
     return [domain(c.source), fmtDate(c.date)].filter(Boolean).join("  ·  ");
   }
 
-  function paragraphs(text) {
-    const box = el("div", "quote");
+  // Text clippings can carry a style: quote (big and bold), headline, excerpt (default) or note.
+  const STYLES = ["quote", "headline", "excerpt", "note"];
+  function textStyle(c) {
+    const st = String(c.style || "").toLowerCase();
+    return STYLES.includes(st) ? st : "excerpt";
+  }
+
+  function paragraphs(text, style) {
+    const box = el("div", "quote style-" + (style || "excerpt"));
     String(text || "").split(/\n\s*\n/).forEach((p) => box.appendChild(el("p", null, p.trim())));
     return box;
   }
@@ -45,8 +52,7 @@
       : `${state.view.length} of ${state.all.length} clippings`;
     $("#empty").hidden = state.view.length > 0;
 
-    const feat = !state.q && state.all.find(isFeatured);
-    if (feat) state.view = [feat, ...state.view.filter((c) => c !== feat)];
+    const feat = !state.q && state.featured;
     const box = $("#feature");
     box.textContent = "";
     box.hidden = !feat;
@@ -56,13 +62,21 @@
     });
   }
 
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   // A clipping tagged "featured" is pinned above the wall; the newest one wins.
   function isFeatured(c) {
     return (c.tags || []).some((t) => t.toLowerCase() === "featured");
   }
 
   function card(c, i) {
-    const card = el("button", "clip " + c.type);
+    const card = el("button", "clip " + c.type + (c.type === "text" ? " is-" + textStyle(c) : ""));
     card.type = "button";
     if (c.type === "image") {
       const img = el("img");
@@ -72,7 +86,7 @@
       if (c.width && c.height) { img.width = c.width; img.height = c.height; }
       card.appendChild(img);
     } else {
-      card.appendChild(paragraphs(c.text));
+      card.appendChild(paragraphs(c.text, textStyle(c)));
     }
     if (c.caption) card.appendChild(el("p", "cap", c.caption));
     const m = metaLine(c);
@@ -98,7 +112,7 @@
       img.alt = c.alt || c.caption || "";
       media.appendChild(img);
     } else {
-      media.appendChild(paragraphs(c.text));
+      media.appendChild(paragraphs(c.text, textStyle(c)));
     }
     if (c.caption) info.appendChild(el("p", "cap", c.caption));
 
@@ -166,8 +180,12 @@
       try { data = await fetch("clippings.json", { cache: "no-store" }).then((r) => r.json()); }
       catch { data = []; $("#empty").textContent = "Could not load clippings.json. Serve this folder with a local web server (see README)."; }
     }
-    // Newest first; same-day clippings keep the order they were added in, latest on top.
-    state.all = data.slice().reverse().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    // Featured = newest clipping tagged "featured" (same-day ties go to the one added last).
+    const newest = data.slice().reverse().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    state.featured = newest.find(isFeatured) || null;
+    // Everything else is shuffled on each page load.
+    state.all = shuffle(data.filter((c) => c !== state.featured));
+    if (state.featured) state.all.unshift(state.featured);
     update();
   }
 

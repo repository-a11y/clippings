@@ -10,25 +10,8 @@
     "caption": "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012",
     "source": "https://x.com/cher",
     "tags": [
-      "twitter",
-      "featured"
+      "twitter"
     ]
-  },
-  {
-    "id": "t1",
-    "type": "text",
-    "date": "2026-10-25",
-    "text": "Do not wait for leisure.",
-    "caption": "test"
-  },
-  {
-    "id": "t2",
-    "type": "image",
-    "date": "2026-10-24",
-    "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png",
-    "width": 1222,
-    "height": 350,
-    "caption": "second"
   },
   {
     "id": "2026-10-26-american-singer-katy-perry-in-a-q-a-with",

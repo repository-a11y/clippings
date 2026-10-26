@@ -1,5 +1,5 @@
 // Imports unread emails from approved senders as clippings.
-// Subject = caption. Optional body lines: "source: <url>", "tags: a, b".
+// Subject = caption. Optional body lines: "source: <url>", "tags: a, b", "style: quote|headline|excerpt|note" (text only).
 // Each image attachment becomes an image clipping; an email with no image becomes a text clipping of its body.
 import fs from "node:fs";
 import path from "node:path";
@@ -34,7 +34,7 @@ function parseBody(text) {
   const meta = {};
   const rest = [];
   for (const line of String(text || "").split(/\r?\n/)) {
-    const m = line.match(/^\s*(source|tags)\s*:\s*(.+)$/i);
+    const m = line.match(/^\s*(source|tags|style)\s*:\s*(.+)$/i);
     if (m) meta[m[1].toLowerCase()] = m[2].trim();
     else rest.push(line);
   }
@@ -84,7 +84,10 @@ try {
         added++;
       }
     } else if (body) {
-      db.push({ id: uniqueId(`${today}-${slug(caption || body)}`), type: "text", date: today, text: body, ...extra });
+      const style = (meta.style || "").toLowerCase();
+      const clip = { id: uniqueId(`${today}-${slug(caption || body)}`), type: "text", date: today, text: body };
+      if (["quote", "headline", "excerpt", "note"].includes(style)) clip.style = style;
+      db.push({ ...clip, ...extra });
       added++;
     }
   }

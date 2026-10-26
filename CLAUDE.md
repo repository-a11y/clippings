@@ -26,3 +26,7 @@ When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.h
 ## Featured clipping
 
 A clipping tagged `featured` is shown large at the top of the site (and not repeated in the grid). If several are tagged, the most recently added one wins; the rest appear in the grid normally. The tag itself isn't shown to visitors. Featured is hidden while searching.
+
+## Order and text styles
+
+The grid is shuffled on every page load (the featured clipping stays on top). Text clippings take an optional `style`: `quote` (largest, bold sans, for things people said), `headline` (bold serif, for news headlines/titles), `excerpt` (default, reading text in a card, for passages from articles/books), `note` (small monospace, for notes/captions/screens of text).

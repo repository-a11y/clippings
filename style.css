@@ -82,6 +82,28 @@ body {
 .clip.text .quote p + p { margin-top: .7em; }
 .clip.text .cap { color: var(--muted); font-style: italic; }
 
+/* Text clipping styles */
+.clip.text .quote.style-quote,
+.viewer .media .quote.style-quote {
+  background: none; border: 0; border-top: 3px solid var(--ink); border-radius: 0;
+  font: 700 clamp(24px, 2.6vw, 32px)/1.15 var(--display); letter-spacing: -0.015em;
+  padding: 16px 2px 4px;
+}
+.clip.text .quote.style-headline,
+.viewer .media .quote.style-headline {
+  background: none; border: 0; border-bottom: 1px solid var(--rule); border-radius: 0;
+  font: 600 22px/1.2 var(--read); padding: 4px 2px 14px; text-wrap: balance;
+}
+.clip.text .quote.style-note,
+.viewer .media .quote.style-note {
+  background: none; border: 1px dashed var(--rule);
+  font: 13px/1.55 var(--meta); color: var(--ink);
+}
+.viewer .media .quote.style-quote { font-size: clamp(28px, 4vw, 48px); border-top: 0; padding: 40px clamp(20px, 5vw, 56px); }
+.viewer .media .quote.style-headline { font-size: clamp(24px, 3vw, 34px); border-bottom: 0; padding: 40px clamp(20px, 5vw, 56px); }
+.viewer .media .quote.style-note { font-size: 15px; border: 0; padding: 40px clamp(20px, 5vw, 56px); }
+.feature .clip.text .quote.style-quote { font-size: clamp(32px, 5vw, 56px); text-align: center; border-top: 0; }
+
 .empty { font: 15px/1.5 var(--display); color: var(--muted); padding: 48px 0; text-align: center; }
 
 /* Viewer */
