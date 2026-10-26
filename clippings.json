@@ -1,1 +1,128 @@
-[{"id": "2026-10-26-tweet-by-cher-cher-august-18-2012", "type": "image", "date": "2026-10-26", "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png", "width": 1222, "height": 350, "alt": "Tweet from @cher: \"Whats going on with mycareer\", 12:03 PM, Aug 18, 2012", "caption": "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012", "source": "https://x.com/cher", "tags": ["twitter", "featured"]}, {"id": "t1", "type": "text", "date": "2026-10-25", "text": "Do not wait for leisure.", "caption": "test"}, {"id": "t2", "type": "image", "date": "2026-10-24", "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png", "width": 1222, "height": 350, "caption": "second"}]
+[
+  {
+    "id": "2026-10-26-tweet-by-cher-cher-august-18-2012",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png",
+    "width": 1222,
+    "height": 350,
+    "alt": "Tweet from @cher: \"Whats going on with mycareer\", 12:03 PM, Aug 18, 2012",
+    "caption": "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012",
+    "source": "https://x.com/cher",
+    "tags": [
+      "twitter",
+      "featured"
+    ]
+  },
+  {
+    "id": "t1",
+    "type": "text",
+    "date": "2026-10-25",
+    "text": "Do not wait for leisure.",
+    "caption": "test"
+  },
+  {
+    "id": "t2",
+    "type": "image",
+    "date": "2026-10-24",
+    "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png",
+    "width": 1222,
+    "height": 350,
+    "caption": "second"
+  },
+  {
+    "id": "2026-10-26-american-singer-katy-perry-in-a-q-a-with",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-american-singer-katy-perry-in-a-q-a-with.jpg",
+    "width": 1284,
+    "height": 572,
+    "caption": "American singer Katy Perry in a Q&A with Billboard host Tetris Kelly at a screening of her concert film Katy Perry: The Lifetimes Tour - August 26, 2026",
+    "source": "https://los40.com/2026/08/27/katy-perry-celebra-los-16-anos-de-teenage-dream-durante-la-proyeccion-de-su-concierto-en-los-angeles-fue-un-everest/",
+    "tags": [
+      "katy perry",
+      "teenage dream",
+      "lifetimes tour",
+      "pop crave"
+    ]
+  },
+  {
+    "id": "2026-10-26-tom-rothman-chairman-and-ceo-of-sony-pic",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-tom-rothman-chairman-and-ceo-of-sony-pic.png",
+    "width": 1174,
+    "height": 828,
+    "caption": "Tom Rothman, Chairman and CEO of Sony Pictures, in an email interview with American journalist Matt Belloni, What I'm Hearing, Puck, August 4, 2026.",
+    "source": "https://puck.news/newsletter_content/what-im-hearing-sonys-spidey-victory-lap-the-warnermount-theater-war/",
+    "tags": [
+      "tom rothman",
+      "sony pictures",
+      "spider-man",
+      "matt belloni",
+      "puck"
+    ]
+  },
+  {
+    "id": "2026-10-26-television-judge-judge-judy-in-a-phone-i",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-television-judge-judge-judy-in-a-phone-i.png",
+    "width": 1073,
+    "height": 863,
+    "caption": "Television judge “Judge Judy” in a phone interview with drag queen RuPaul, Interview, August 19, 2019.",
+    "source": "https://www.interviewmagazine.com/culture/justice-is-served-a-conversation-between-rupaul-and-judge-judy",
+    "tags": [
+      "rupaul",
+      "judge judy",
+      "judith sheindlin",
+      "interview magazine"
+    ]
+  },
+  {
+    "id": "2026-10-26-photograph-of-a-sign-on-cecil-court-lond",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-photograph-of-a-sign-on-cecil-court-lond.jpg",
+    "width": 1008,
+    "height": 1336,
+    "caption": "Photograph of a sign on Cecil Court, London.",
+    "source": "https://www.londonworld.com/whats-on/cecil-court-harry-potter-covent-garden-4937078",
+    "tags": [
+      "cecil court",
+      "harry potter",
+      "j.k. rowling",
+      "london",
+      "diagon alley"
+    ]
+  },
+  {
+    "id": "2026-10-26-american-actor-tom-cruise-in-an-intervie",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-american-actor-tom-cruise-in-an-intervie.jpg",
+    "width": 1075,
+    "height": 604,
+    "caption": "American actor Tom Cruise in an interview with Australian journalist Peter Overton, after Overton's question regarding Cruise's post-divorce relationship with Nicole Kidman, 60 Minutes Australia, 2005.",
+    "source": "https://www.youtube.com/watch?v=PsnYB6EiSCE",
+    "tags": [
+      "tom cruise",
+      "peter overton",
+      "60 minutes australia"
+    ]
+  },
+  {
+    "id": "2026-10-26-filmmaker-john-waters-in-a-video-intervi",
+    "type": "image",
+    "date": "2026-10-26",
+    "src": "media/2026-10-26-filmmaker-john-waters-in-a-video-intervi.png",
+    "width": 1060,
+    "height": 604,
+    "caption": "Filmmaker John Waters in a video interview.",
+    "tags": [
+      "featured",
+      "john waters",
+      "film"
+    ]
+  }
+]
