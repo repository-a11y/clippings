@@ -25,3 +25,7 @@ Search box (press `/`), filter by type or tag, click any clipping to open it. Ar
 ## Hosting
 
 Any static host works: GitHub Pages, Netlify, Cloudflare Pages. Push the folder and point the host at the root.
+
+## Backup
+
+Every Sunday a GitHub Action saves a zip of `clippings.json` and `media/` to the Gmail label "Clippings backups" in the inbox account, keeping the last 8. To restore, unzip it (all parts, if split) into one folder. To back up now: Actions → Backup → Run workflow.

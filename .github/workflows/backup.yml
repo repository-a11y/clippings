@@ -1,0 +1,23 @@
+name: Backup
+
+on:
+  schedule:
+    - cron: "0 9 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save imapflow@1.0.164
+      - run: node scripts/backup.mjs
+        env:
+          INBOX_USER: ${{ secrets.INBOX_USER }}
+          INBOX_APP_PASSWORD: ${{ secrets.INBOX_APP_PASSWORD }}
