@@ -18,3 +18,7 @@ Name people only when the source page, on-screen text, or Robert says who they a
 ## Editing code
 
 When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.html` so browsers don't pair a new page with a cached old script.
+
+## Email inbox
+
+`.github/workflows/email-inbox.yml` runs every 15 minutes (only when repo variable `INBOX_ENABLED` is `true`) and runs `scripts/email-inbox.mjs`: unread Gmail messages from `ALLOWED_SENDERS` become clippings. Subject = caption; optional body lines `source: <url>` and `tags: a, b`; each image attachment = one image clipping; no image = text clipping of the body. Secrets: `INBOX_USER`, `INBOX_APP_PASSWORD` (Gmail app password), `ALLOWED_SENDERS` (comma-separated).

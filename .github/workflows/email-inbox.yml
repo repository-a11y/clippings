@@ -1,0 +1,33 @@
+name: Email inbox
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: email-inbox
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    if: ${{ vars.INBOX_ENABLED == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save imapflow@1.0.164 mailparser@3.7.1
+      - run: node scripts/email-inbox.mjs
+        env:
+          INBOX_USER: ${{ secrets.INBOX_USER }}
+          INBOX_APP_PASSWORD: ${{ secrets.INBOX_APP_PASSWORD }}
+          ALLOWED_SENDERS: ${{ secrets.ALLOWED_SENDERS }}
+      - name: Commit new clippings
+        run: |
+          git config user.name "clippings-inbox"
+          git config user.email "clippings-inbox@users.noreply.github.com"
+          git add clippings.json media
+          git diff --cached --quiet || (git commit -m "Add clippings from email inbox" && git push)
