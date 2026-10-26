@@ -12,3 +12,7 @@ Image captions are a factual description of what the image depicts: who/what, th
 Example: "Tom Cruise in an interview with Barbara Walters, 20/20 ABC, March 1990"
 
 Name people only when the source page, on-screen text, or Robert says who they are. Never from their face. If who/when/where isn't established, ask Robert or leave that part out rather than guessing.
+
+## Editing code
+
+When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.html` so browsers don't pair a new page with a cached old script.
