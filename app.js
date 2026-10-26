@@ -45,25 +45,40 @@
       : `${state.view.length} of ${state.all.length} clippings`;
     $("#empty").hidden = state.view.length > 0;
 
+    const feat = !state.q && state.all.find(isFeatured);
+    if (feat) state.view = [feat, ...state.view.filter((c) => c !== feat)];
+    const box = $("#feature");
+    box.textContent = "";
+    box.hidden = !feat;
+
     state.view.forEach((c, i) => {
-      const card = el("button", "clip " + c.type);
-      card.type = "button";
-      if (c.type === "image") {
-        const img = el("img");
-        img.src = c.src;
-        img.alt = c.alt || c.caption || "";
-        img.loading = "lazy";
-        if (c.width && c.height) { img.width = c.width; img.height = c.height; }
-        card.appendChild(img);
-      } else {
-        card.appendChild(paragraphs(c.text));
-      }
-      if (c.caption) card.appendChild(el("p", "cap", c.caption));
-      const m = metaLine(c);
-      if (m) card.appendChild(el("div", "meta", m));
-      card.onclick = () => openViewer(i);
-      wall.appendChild(card);
+      (feat && i === 0 ? box : wall).appendChild(card(c, i));
     });
+  }
+
+  // A clipping tagged "featured" is pinned above the wall; the newest one wins.
+  function isFeatured(c) {
+    return (c.tags || []).some((t) => t.toLowerCase() === "featured");
+  }
+
+  function card(c, i) {
+    const card = el("button", "clip " + c.type);
+    card.type = "button";
+    if (c.type === "image") {
+      const img = el("img");
+      img.src = c.src;
+      img.alt = c.alt || c.caption || "";
+      if (i > 0) img.loading = "lazy";
+      if (c.width && c.height) { img.width = c.width; img.height = c.height; }
+      card.appendChild(img);
+    } else {
+      card.appendChild(paragraphs(c.text));
+    }
+    if (c.caption) card.appendChild(el("p", "cap", c.caption));
+    const m = metaLine(c);
+    if (m) card.appendChild(el("div", "meta", m));
+    card.onclick = () => openViewer(i);
+    return card;
   }
 
   function update() { renderWall(); }
@@ -96,9 +111,10 @@
     if (c.date) meta.appendChild(document.createTextNode((c.source ? "  ·  clipped " : "clipped ") + fmtDate(c.date)));
     if (meta.childNodes.length) info.appendChild(meta);
 
-    if ((c.tags || []).length) {
+    const shown = (c.tags || []).filter((t) => t.toLowerCase() !== "featured");
+    if (shown.length) {
       const tags = el("div", "tags");
-      c.tags.forEach((t) => {
+      shown.forEach((t) => {
         tags.appendChild(el("span", "tag", t));
       });
       info.appendChild(tags);
@@ -150,7 +166,8 @@
       try { data = await fetch("clippings.json", { cache: "no-store" }).then((r) => r.json()); }
       catch { data = []; $("#empty").textContent = "Could not load clippings.json. Serve this folder with a local web server (see README)."; }
     }
-    state.all = data.slice().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    // Newest first; same-day clippings keep the order they were added in, latest on top.
+    state.all = data.slice().reverse().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     update();
   }
 

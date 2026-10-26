@@ -22,3 +22,7 @@ When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.h
 ## Email inbox
 
 `.github/workflows/email-inbox.yml` runs every 15 minutes (only when repo variable `INBOX_ENABLED` is `true`) and runs `scripts/email-inbox.mjs`: unread Gmail messages from `ALLOWED_SENDERS` become clippings. Subject = caption; optional body lines `source: <url>` and `tags: a, b`; each image attachment = one image clipping; no image = text clipping of the body. Secrets: `INBOX_USER`, `INBOX_APP_PASSWORD` (Gmail app password), `ALLOWED_SENDERS` (comma-separated).
+
+## Featured clipping
+
+A clipping tagged `featured` is shown large at the top of the site (and not repeated in the grid). If several are tagged, the most recently added one wins; the rest appear in the grid normally. The tag itself isn't shown to visitors. Featured is hidden while searching.

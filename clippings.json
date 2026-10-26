@@ -1,16 +1,1 @@
-[
-  {
-    "id": "2026-10-26-tweet-by-cher-cher-august-18-2012",
-    "type": "image",
-    "date": "2026-10-26",
-    "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png",
-    "width": 1222,
-    "height": 350,
-    "alt": "Tweet from @cher: \"Whats going on with mycareer\", 12:03 PM, Aug 18, 2012",
-    "caption": "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012",
-    "source": "https://x.com/cher",
-    "tags": [
-      "twitter"
-    ]
-  }
-]
+[{"id": "2026-10-26-tweet-by-cher-cher-august-18-2012", "type": "image", "date": "2026-10-26", "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png", "width": 1222, "height": 350, "alt": "Tweet from @cher: \"Whats going on with mycareer\", 12:03 PM, Aug 18, 2012", "caption": "Tweet by American entertainer Cher (@cher), posted to Twitter, August 18, 2012", "source": "https://x.com/cher", "tags": ["twitter", "featured"]}, {"id": "t1", "type": "text", "date": "2026-10-25", "text": "Do not wait for leisure.", "caption": "test"}, {"id": "t2", "type": "image", "date": "2026-10-24", "src": "media/2026-10-26-tweet-by-cher-cher-august-18-2012.png", "width": 1222, "height": 350, "caption": "second"}]
