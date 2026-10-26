@@ -25,7 +25,7 @@ When changing `app.js` or `style.css`, bump the `?v=` number on both in `index.h
 
 ## Featured clipping
 
-A clipping tagged `featured` is shown large at the top of the site (and not repeated in the grid). If several are tagged, the most recently added one wins; the rest appear in the grid normally. The tag itself isn't shown to visitors. Featured is hidden while searching.
+The top slot always holds an image: the most recently added image tagged `featured`, or if none is tagged, the most recently added image. It isn't repeated in the grid; other `featured` clippings appear in the grid normally. The tag itself isn't shown to visitors. Featured is hidden while searching.
 
 ## Order and text styles
 

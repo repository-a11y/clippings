@@ -180,9 +180,11 @@
       try { data = await fetch("clippings.json", { cache: "no-store" }).then((r) => r.json()); }
       catch { data = []; $("#empty").textContent = "Could not load clippings.json. Serve this folder with a local web server (see README)."; }
     }
-    // Featured = newest clipping tagged "featured" (same-day ties go to the one added last).
+    // Top slot is always an image: the newest image tagged "featured", else the newest image
+    // (same-day ties go to the one added last).
     const newest = data.slice().reverse().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-    state.featured = newest.find(isFeatured) || null;
+    const images = newest.filter((c) => c.type === "image");
+    state.featured = images.find(isFeatured) || images[0] || null;
     // Everything else is shuffled on each page load.
     state.all = shuffle(data.filter((c) => c !== state.featured));
     if (state.featured) state.all.unshift(state.featured);
