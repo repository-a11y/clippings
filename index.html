@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clippings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600&family=JetBrains+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- BODY START -->
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Clippings</h1>
+      <div class="count" id="count"></div>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Search captions, text, tags   ( / )" aria-label="Search clippings">
+  </header>
+  <nav class="filters" id="filters" aria-label="Filter clippings"></nav>
+  <main class="wall" id="wall"></main>
+  <p class="empty" id="empty" hidden>Nothing matches that search.</p>
+</div>
+
+<div class="viewer" id="viewer" hidden role="dialog" aria-modal="true" aria-label="Clipping">
+  <div class="sheet">
+    <div class="media"></div>
+    <div class="info"></div>
+  </div>
+  <button class="vbtn vclose" type="button" aria-label="Close">×</button>
+  <button class="vbtn nav vprev" type="button" aria-label="Previous">‹</button>
+  <button class="vbtn nav vnext" type="button" aria-label="Next">›</button>
+</div>
+<!-- BODY END -->
+<script src="app.js"></script>
+</body>
+</html>
