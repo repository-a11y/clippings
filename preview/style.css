@@ -1,0 +1,102 @@
+/* Layout: a fixed left rail (title, search) and a stage that shows one clipping at a time. */
+:root {
+  --paper: #eef0ec;
+  --ink: #1c2024;
+  --muted: #6a716f;
+  --rule: #d6dad4;
+  --accent: #2c55c9;
+  --field: #fbfbf8;
+  --rail-w: 300px;
+  --display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --read: "Newsreader", Georgia, "Times New Roman", serif;
+  --meta: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #141719; --ink: #e8eae6; --muted: #949b98; --rule: #2e3337; --accent: #8aa6ff; --field: #1d2124;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #141719; --ink: #e8eae6; --muted: #949b98; --rule: #2e3337; --accent: #8aa6ff; --field: #1d2124;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0; overflow: hidden;
+  background: var(--paper); color: var(--ink);
+  font: 16px/1.5 var(--read);
+  display: grid; grid-template-columns: var(--rail-w) 1fr;
+}
+
+/* Rail */
+.rail {
+  height: 100%; display: flex; flex-direction: column; gap: 20px;
+  padding: max(28px, env(safe-area-inset-top, 0px)) 28px 28px max(28px, env(safe-area-inset-left, 0px));
+  border-right: 1px solid var(--rule);
+}
+.rail h1 { font: 600 30px/1.05 var(--display); letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
+.search {
+  font: 15px/1 var(--display); color: var(--ink); width: 100%;
+  background: var(--field); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px;
+}
+.search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.hint { margin: auto 0 0; font: 11px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.04em; transition: opacity .6s; }
+.hint.gone { opacity: 0; }
+
+/* Stage */
+.stage { position: relative; height: 100%; overflow: hidden; touch-action: none; overscroll-behavior: none; }
+.slide {
+  position: absolute; inset: 0;
+  display: grid; grid-template-rows: 1fr auto;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity .7s ease, transform .7s ease;
+  pointer-events: none;
+}
+.slide.on { opacity: 1; transform: none; pointer-events: auto; }
+.slide.leaving { opacity: 0; transform: translateY(-18px); }
+.slide .art { min-height: 0; display: grid; place-items: center; padding: 40px 48px 16px; }
+.slide.image .art { padding: 24px 32px 14px; }
+.slide.image .art img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.label {
+  padding: 0 48px max(28px, env(safe-area-inset-bottom, 0px));
+  max-width: 72ch; display: flex; flex-direction: column; gap: 4px;
+}
+.label .cap { font-size: 15px; line-height: 1.4; margin: 0; }
+.label .src { font: 11px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.03em; }
+.label .src a { color: inherit; }
+.label .src a:hover { color: var(--accent); }
+
+/* Text clippings: huge type on a plain colour field. Colours are fixed pairs, the same in both themes. */
+.slide.text { background: var(--bg); color: var(--fg); }
+.slide.text .label .src { color: var(--fg); opacity: .7; }
+.slide.text .art { padding: 48px clamp(28px, 6vw, 96px) 16px; }
+.words { width: 100%; max-width: 30ch; max-height: 100%; margin: 0; }
+.words p { margin: 0 0 .5em; }
+.words p:last-child { margin-bottom: 0; }
+.words.quote { font-family: var(--display); font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; max-width: 22ch; }
+.words.headline { font-family: var(--read); font-weight: 600; line-height: 1.12; text-wrap: balance; max-width: 24ch; }
+.words.excerpt { font-family: var(--read); line-height: 1.35; max-width: 40ch; }
+.words.note { font-family: var(--meta); line-height: 1.5; max-width: 48ch; }
+
+.empty { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; font: 15px/1.5 var(--display); color: var(--muted); }
+
+/* Phone: the rail becomes a slim bar on top. */
+@media (max-width: 720px) {
+  body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .rail {
+    height: auto; flex-direction: row; align-items: center; gap: 12px; border-right: 0; border-bottom: 1px solid var(--rule);
+    padding: max(12px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px));
+  }
+  .rail h1 { font-size: 17px; flex: 1 1 auto; min-width: 0; }
+  .search { flex: 0 1 140px; padding: 8px 10px; font-size: 14px; }
+  .hint { display: none; }
+  .slide .art, .slide.image .art { padding: 12px 0 10px; }
+  .slide.text .art { padding: 24px 22px 10px; }
+  .label { padding: 0 max(16px, env(safe-area-inset-left, 0px)) max(18px, env(safe-area-inset-bottom, 0px)); }
+  .label .cap { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .slide { transition: opacity .2s linear; transform: none !important; } }
