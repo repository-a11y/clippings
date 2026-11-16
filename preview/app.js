@@ -62,7 +62,18 @@
     s.appendChild(art);
 
     const label = el("div", "label");
-    if (c.caption) label.appendChild(el("p", "cap", c.caption));
+    // The speaker of a text clipping is set large above the caption and in bold within it.
+    if (c.type === "text" && c.by) label.appendChild(el("div", "who", c.by));
+    if (c.caption) {
+      const cap = el("p", "cap");
+      const k = c.by ? c.caption.indexOf(c.by) : -1;
+      if (k >= 0) {
+        cap.append(c.caption.slice(0, k), el("strong", null, c.by), c.caption.slice(k + c.by.length));
+      } else {
+        cap.textContent = c.caption;
+      }
+      label.appendChild(cap);
+    }
     if (c.source) {
       const src = el("div", "src");
       const a = el("a", null, domain(c.source) || c.source);
@@ -72,6 +83,19 @@
     }
     s.appendChild(label);
     return s;
+  }
+
+  // Images fill the stage, scaled up at most 2x so small GIFs don't turn to mush.
+  function sizeImage(slide) {
+    const img = slide.querySelector(".art img");
+    const box = slide.querySelector(".art");
+    if (!img || !img.naturalWidth) return;
+    const cs = getComputedStyle(box);
+    const w = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const h = box.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const k = Math.min(w / img.naturalWidth, h / img.naturalHeight, 2);
+    img.style.width = Math.floor(img.naturalWidth * k) + "px";
+    img.style.height = Math.floor(img.naturalHeight * k) + "px";
   }
 
   // Largest font size at which the text fits its box.
@@ -109,7 +133,10 @@
     stage.appendChild(s);
     fit(s);
     const img = s.querySelector("img");
-    if (img && !img.complete) img.addEventListener("load", () => fit(s), { once: true });
+    if (img) {
+      if (img.complete) sizeImage(s);
+      else img.addEventListener("load", () => sizeImage(s), { once: true });
+    }
     requestAnimationFrame(() => requestAnimationFrame(() => { s.style.transform = ""; s.classList.add("on"); }));
     state.cur = s;
     preload(state.i + 1); preload(state.i - 1);
@@ -184,7 +211,7 @@
     });
 
     let r;
-    window.addEventListener("resize", () => { clearTimeout(r); r = setTimeout(() => state.cur && fit(state.cur), 120); });
+    window.addEventListener("resize", () => { clearTimeout(r); r = setTimeout(() => { if (state.cur) { fit(state.cur); sizeImage(state.cur); } }, 120); });
   }
 
   function filter(q) {
@@ -196,6 +223,24 @@
     show(0, 1);
   }
 
+  // The featured clipping sits in the left column for the whole visit; it loads before anything else.
+  function pin(c) {
+    const fig = $("#pinned");
+    const btn = el("button", "pin-art");
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Show the featured clipping full size");
+    const img = el("img");
+    img.src = base + c.src;
+    img.alt = c.alt || c.caption || "";
+    img.fetchPriority = "high";
+    if (c.width && c.height) { img.width = c.width; img.height = c.height; }
+    btn.appendChild(img);
+    btn.onclick = () => { state.lockUntil = 0; state.seq = [c, ...state.seq.filter((x) => x !== c)]; show(0, 1); };
+    fig.append(el("div", "pin-tag", "Featured"), btn);
+    if (c.caption) fig.appendChild(el("figcaption", null, c.caption));
+    fig.hidden = false;
+  }
+
   async function start() {
     wire();
     let data = [];
@@ -205,8 +250,10 @@
     const newest = data.slice().reverse().sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
     const images = newest.filter((c) => c.type === "image");
     const featured = images.find(isFeatured) || images[0] || null;
+    if (featured) pin(featured);
     state.all = shuffle(data.filter((c) => c !== featured));
-    if (featured) state.all.unshift(featured);
+    // Phones have no left column, so the featured clipping opens the sequence instead.
+    if (featured && matchMedia("(max-width: 720px)").matches) state.all.unshift(featured);
     state.seq = state.all;
     show(0, 1);
   }

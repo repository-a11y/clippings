@@ -25,6 +25,7 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html, body { height: 100%; }
+body { height: 100dvh; }
 body {
   margin: 0; overflow: hidden;
   background: var(--paper); color: var(--ink);
@@ -44,6 +45,12 @@ body {
   background: var(--field); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px;
 }
 .search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.pinned { margin: 8px 0 0; display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.pin-tag { font: 11px/1 var(--meta); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.pin-art { padding: 0; border: 0; background: none; cursor: zoom-in; display: block; min-height: 0; }
+.pin-art img { display: block; width: 100%; height: auto; max-height: 40vh; object-fit: contain; object-position: left top; border-radius: 2px; }
+.pin-art:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pinned figcaption { font-size: 14px; line-height: 1.4; }
 .hint { margin: auto 0 0; font: 11px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.04em; transition: opacity .6s; }
 .hint.gone { opacity: 0; }
 
@@ -60,19 +67,23 @@ body {
 .slide.leaving { opacity: 0; transform: translateY(-18px); }
 .slide .art { min-height: 0; display: grid; place-items: center; padding: 40px 48px 16px; }
 .slide.image .art { padding: 24px 32px 14px; }
-.slide.image .art img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.slide.image .art { overflow: hidden; }
+.slide.image .art img { display: block; max-width: none; }
 .label {
   padding: 0 48px max(28px, env(safe-area-inset-bottom, 0px));
   max-width: 72ch; display: flex; flex-direction: column; gap: 4px;
 }
-.label .cap { font-size: 15px; line-height: 1.4; margin: 0; }
-.label .src { font: 11px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.03em; }
+.label .cap { font-size: 19px; line-height: 1.4; margin: 0; }
+.label .cap strong { font-weight: 600; }
+.label .who { font: 700 clamp(26px, 2.6vw, 36px)/1.1 var(--display); letter-spacing: -0.015em; margin-bottom: 4px; }
+.label .src { font: 12px/1.4 var(--meta); color: var(--muted); letter-spacing: 0.03em; }
 .label .src a { color: inherit; }
 .label .src a:hover { color: var(--accent); }
 
 /* Text clippings: huge type on a plain colour field. Colours are fixed pairs, the same in both themes. */
 .slide.text { background: var(--bg); color: var(--fg); }
 .slide.text .label .src { color: var(--fg); opacity: .7; }
+.slide.text .label .cap { color: var(--fg); }
 .slide.text .art { padding: 48px clamp(28px, 6vw, 96px) 16px; }
 .words { width: 100%; max-width: 30ch; max-height: 100%; margin: 0; }
 .words p { margin: 0 0 .5em; }
@@ -94,9 +105,11 @@ body {
   .rail h1 { font-size: 17px; flex: 1 1 auto; min-width: 0; }
   .search { flex: 0 1 140px; padding: 8px 10px; font-size: 14px; }
   .hint { display: none; }
+  .pinned { display: none !important; }
   .slide .art, .slide.image .art { padding: 12px 0 10px; }
   .slide.text .art { padding: 24px 22px 10px; }
   .label { padding: 0 max(16px, env(safe-area-inset-left, 0px)) max(18px, env(safe-area-inset-bottom, 0px)); }
-  .label .cap { font-size: 14px; }
+  .label .cap { font-size: 16px; }
+  .label .who { font-size: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .slide { transition: opacity .2s linear; transform: none !important; } }

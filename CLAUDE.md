@@ -34,3 +34,11 @@ The grid is shuffled on every page load (the featured clipping stays on top). Te
 ## Backup
 
 `.github/workflows/backup.yml` runs Sundays 09:00 UTC (and on manual "Run workflow") and runs `scripts/backup.mjs`: zips `clippings.json` + `media/` and saves it as a read message under the Gmail label "Clippings backups" in the inbox account (same `INBOX_USER`/`INBOX_APP_PASSWORD` secrets). Large archives split into ~15 MB parts. Keeps the newest 8 backups. `node scripts/backup.mjs --dry-run` writes the messages to `backup-out/` to inspect.
+
+## Speaker of a text clipping
+
+Text clippings can carry `by` (the person speaking, written exactly as in the caption). The one-at-a-time view shows it large above the caption and bolds it inside the caption.
+
+## One-at-a-time view (preview)
+
+`preview/` is a separate front end at `/preview/`: fixed left rail, one clipping per screen, fades on scroll/swipe/arrow keys. It reads `../clippings.json` and `../media/`. Bump its own `?v=` on changes.
